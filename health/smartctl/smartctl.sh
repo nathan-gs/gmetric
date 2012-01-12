@@ -3,6 +3,7 @@
 # desc:   smart temperature to ganglia.
 
 # detect harddrives.
+
 HARDDISKS=`find /sys/block/ -name 'sd*' -printf "%f\n"`
 
 GMETRIC=/usr/bin/gmetric
@@ -19,3 +20,4 @@ Max_Temp=`for disk in `find /sys/block/ -name 'sd*' -printf "%f\n"`; do smartctl
 #Max_Airflow_Temp=`for disk in `find /sys/block/ -name 'sd*' -printf "%f\n"`; do smartctl -A /dev/$disk | grep Airflow_Temperature_Cel | awk '{print $10}'; done | sort -r | head -1`
 $GMETRIC -t float -n "disk_temp" -u "C" -v $Max_Temp
 #$GMETRIC -t float -n "disk_air_temp" -u "C" -v $Max_Airflow_Temp
+
