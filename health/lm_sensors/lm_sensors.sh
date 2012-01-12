@@ -17,14 +17,6 @@ GMETRIC="$GMETRIC_BIN -i $MCAST_IF"
 
 SENSORS=/usr/bin/sensors
 
-# load the lm_sensors modules
-module=`/sbin/lsmod | awk '{print $1}' | grep i2c-piix4`
-if [ -z "$module" ]; then
-    /sbin/modprobe i2c-piix4
-    # lm87 is for supermicro P3TDLE, replace when appropriate
-    /sbin/modprobe lm87
-fi
-
 # send cpu temps if gmond is running
 `/sbin/service gmond status > /dev/null`
 if [ $? -eq 0 ]; then
