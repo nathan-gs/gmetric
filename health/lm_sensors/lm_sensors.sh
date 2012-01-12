@@ -10,14 +10,9 @@ SENSORS=/usr/bin/sensors
 
 # send cpu temperatures
 let count=0
-    for temp in `${SENSORS} | grep emp | cut -b 13-16`; do 
+    for temp in ` sensors | grep Core | sed "s/[^0-9]//g" | cut -b 2-3`; do 
     $GMETRIC -t float -n "cpu${count}_temp" -u "C" -v $temp 
     let count+=1
 done
-
-# send cpu fan speed
-let count=0
-    for fan in `${SENSORS} | grep fan | cut -b 9-14`; do
-    $GMETRIC -t uint32 -n "cpu${count}_fan" -u "RPM" -v $fan
-    let count+=1
-done
+MAX_TEMP=`sensors | grep Core | sed "s/[^0-9]//g" | cut -b 2-3 | sort -n -r | head -1`
+$GMETRIC -t float -n "cpu_temp" -u "C" -v $MAX_TEMP
