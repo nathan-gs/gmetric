@@ -4,7 +4,7 @@
 
 GMETRIC_BIN=/usr/bin/gmetric
 # establish a base commandline
-GMETRIC="$GMETRIC_BIN -i $MCAST_IF"
+GMETRIC="$GMETRIC_BIN"
 
 SENSORS=/usr/bin/sensors
 
